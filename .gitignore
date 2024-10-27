@@ -26,3 +26,4 @@ replay_pid*
 # MySQL temp files
 *.sock
 /api-gateway/volume-data
+/api-gateway/.mvn
