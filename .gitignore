@@ -27,3 +27,6 @@ replay_pid*
 *.sock
 /api-gateway/volume-data
 /api-gateway/.mvn
+/inventory-service/mysql
+/order-service/mysql
+/product-service/data
