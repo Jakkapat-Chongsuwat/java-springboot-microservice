@@ -1,8 +1,11 @@
 package com.jakkapat.product_service.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,9 +28,11 @@ public class ProductController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public String createProduct(@RequestBody ProductRequest productRequest) {
+    public ResponseEntity<Map<String, String>> createProduct(@RequestBody ProductRequest productRequest) {
         productService.createProduct(productRequest);
-        return "Product created successfully";
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Product created successfully");
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @GetMapping

@@ -1,33 +1,32 @@
-import {Component, inject, OnInit} from '@angular/core';
-import {OidcSecurityService} from "angular-auth-oidc-client";
-
+import { Component, OnInit } from '@angular/core';
+import { OidcSecurityService } from 'angular-auth-oidc-client';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [],
+  imports: [CommonModule], // Add CommonModule to imports array
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
-
-  private readonly oidcSecurityService = inject(OidcSecurityService);
   isAuthenticated = false;
-  username = "";
+  username = '';
+
+  constructor(private oidcSecurityService: OidcSecurityService) {}
 
   ngOnInit(): void {
     this.oidcSecurityService.isAuthenticated$.subscribe(
-      ({isAuthenticated}) => {
+      ({ isAuthenticated }) => {
         this.isAuthenticated = isAuthenticated;
       }
-    )
-    this.oidcSecurityService.userData$.subscribe(
-      ({userData}) => {
-        this.username = userData.preferred_username
-      }
-    )
+    );
+    this.oidcSecurityService.userData$.subscribe(({ userData }) => {
+      this.username = userData?.preferred_username || '';
+    });
   }
 
   login(): void {
+    console.log('Login button clicked');
     this.oidcSecurityService.authorize();
   }
 
